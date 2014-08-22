@@ -95,14 +95,34 @@ describe('Options', function() {
       assertRate('5000/d', 5000, 86400);
     });
 
-    it('has to be a valid rate', function() {
+    it('has to be a valid format', function() {
       (function() {
         var opts = options.canonical({
           redis: {},
           key: 'ip',
-          rate: '50 things'
+          rate: 'foobar'
         });
-      }).should.throw('Invalid rate: 50 things');
+      }).should.throw('Invalid rate: foobar');
+    });
+
+    it('has to be a valid limit', function() {
+      (function() {
+        var opts = options.canonical({
+          redis: {},
+          key: 'ip',
+          rate: '0/hour'
+        });
+      }).should.throw('Invalid rate limit: 0/hour');
+    });
+
+    it('has to be a valid unit', function() {
+      (function() {
+        var opts = options.canonical({
+          redis: {},
+          key: 'ip',
+          rate: '50/century'
+        });
+      }).should.throw('Invalid rate window: 50/century');
     });
 
   });
