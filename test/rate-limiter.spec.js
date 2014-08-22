@@ -49,6 +49,19 @@ describe('Rate-limiter', function() {
     });
   });
 
+  it('uses one bucket per key', function(done) {
+    var limiter = createLimiter('10/second');
+    var reqs = _.flatten([
+      request(limiter, 10, {id: 'a'}),
+      request(limiter, 12, {id: 'b'}),
+      request(limiter, 10, {id: 'c'})
+    ]);
+    async.parallel(reqs, function(err, rates) {
+      _.filter(rates, {over: true}).should.have.length(2);
+      done();
+    });
+  });
+
   it('can handle a lot of requests', function(done) {
     var limiter = createLimiter('1000/second');
     var reqs = request(limiter, 1200, {id: 'a'});
