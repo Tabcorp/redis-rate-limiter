@@ -1,7 +1,7 @@
 {
-  "name": "connect-rate-limiter",
+  "name": "redis-rate-limiter",
   "version": "0.0.0",
-  "description": "Rate-limit middleware, backed by Redis",
+  "description": "Rate-limit any operation, backed by Redis",
   "author": "Tabcorp Digital Team",
   "license": "MIT",
   "main": "lib/index.js",
@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "ip": "~0.3.1",
-    "moment": "~2.8.1",
-    "redis": "~0.12.1"
+    "moment": "~2.8.1"
   },
   "devDependencies": {
     "async": "~0.9.0",
-    "connect": "~2.25.7",
+    "express": "~4.8.5",
     "lodash": "~2.4.1",
     "mocha": "~1.21.4",
+    "redis": "~0.12.1",
     "should": "~4.0.4",
     "supertest": "~0.13.0"
   }

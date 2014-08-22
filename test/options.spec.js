@@ -7,6 +7,7 @@ describe('Options', function() {
 
     it('can specify a function', function() {
       var opts = options.canonical({
+        redis: {},
         key: function(req) { return req.id; },
         limit: 10,
         window: 60
@@ -18,6 +19,7 @@ describe('Options', function() {
 
     it('can be the full client IP', function() {
       var opts = options.canonical({
+        redis: {},
         key: 'ip',
         limit: 10,
         window: 60
@@ -29,6 +31,7 @@ describe('Options', function() {
 
     it('can be the client IP/32 mask', function() {
       var opts = options.canonical({
+        redis: {},
         key: 'ip/32',
         limit: 10,
         window: 60
@@ -41,6 +44,7 @@ describe('Options', function() {
     it('fails for invalid keys', function() {
       (function() {
         var opts = options.canonical({
+          redis: {},
           key: 'something',
           limit: 10,
           window: 60
@@ -54,6 +58,7 @@ describe('Options', function() {
 
     it('should accept numeric values in seconds', function() {
       var opts = options.canonical({
+        redis: {},
         key: 'ip',
         limit: 10,   // 10 requests
         window: 60   // per 60 seconds
@@ -66,45 +71,34 @@ describe('Options', function() {
 
   describe('rate shorthand notation', function() {
 
-    it('X req/second', function() {
+    function assertRate(rate, limit, window) {
       var opts = options.canonical({
+        redis: {},
         key: 'ip',
-        rate: '10 req/second'
+        rate: rate
       });
-      opts.limit.should.eql(10);
-      opts.window.should.eql(1);
+      opts.limit.should.eql(limit, 'Wrong limit for rate ' + rate);
+      opts.window.should.eql(window, 'Wrong window for rate ' + rate);
+    }
+
+    it('can use the full unit name (x/second)', function() {
+      assertRate('10/second', 10, 1);
+      assertRate('100/minute', 100, 60);
+      assertRate('1000/hour', 1000, 3600);
+      assertRate('5000/day', 5000, 86400);
     });
 
-    it('X req/minute', function() {
-      var opts = options.canonical({
-        key: 'ip',
-        rate: '20 req/minute'
-      });
-      opts.limit.should.eql(20);
-      opts.window.should.eql(60);
-    });
-
-    it('X req/hour', function() {
-      var opts = options.canonical({
-        key: 'ip',
-        rate: '1000 req/hour'
-      });
-      opts.limit.should.eql(1000);
-      opts.window.should.eql(3600);
-    });
-
-    it('X req/day', function() {
-      var opts = options.canonical({
-        key: 'ip',
-        rate: '5000 req/day'
-      });
-      opts.limit.should.eql(5000);
-      opts.window.should.eql(86400);
+    it('can use the short unit name (x/s)', function() {
+      assertRate('10/s', 10, 1);
+      assertRate('100/m', 100, 60);
+      assertRate('1000/h', 1000, 3600);
+      assertRate('5000/d', 5000, 86400);
     });
 
     it('has to be a valid rate', function() {
       (function() {
         var opts = options.canonical({
+          redis: {},
           key: 'ip',
           rate: '50 things'
         });
