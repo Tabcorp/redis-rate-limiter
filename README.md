@@ -156,3 +156,24 @@ server.use(middleware);
 
 It rejects any rate-limited requests with a status code of `HTTP 429`,
 and an empty body.
+
+*Note:* if you want to rate limit several routes individually, don't forget to use the route name as part of the `key`, for example using Restify:
+
+```js
+function ipAndRoute(req) {
+  return req.connection.remoteAddress + ':' + req.route.name;
+}
+
+server.get(
+  {name: 'routeA', path: '/a'},
+  rateLimiter.middleware({redis: client, key: ipAndRoute, rate: '10/minute'}),
+  controllerA
+);
+
+server.get(
+  {name: 'routeB', path: '/b'},
+  rateLimiter.middleware({redis: client, key: ipAndRoute, rate: '20/minute'}),
+  controllerB
+);
+
+```
