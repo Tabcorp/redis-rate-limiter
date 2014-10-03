@@ -1,6 +1,6 @@
 {
   "name": "redis-rate-limiter",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Rate-limit any operation, backed by Redis",
   "author": "Tabcorp Digital Team",
   "license": "MIT",
