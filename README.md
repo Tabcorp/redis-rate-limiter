@@ -1,5 +1,12 @@
 # redis-rate-limiter
 
+[![NPM](http://img.shields.io/npm/v/redis-rate-limiter.svg?style=flat)](https://npmjs.org/package/redis-rate-limiter)
+[![License](http://img.shields.io/npm/l/redis-rate-limiter.svg?style=flat)](https://github.com/TabDigital/redis-rate-limiter)
+
+[![Build Status](http://img.shields.io/travis/TabDigital/redis-rate-limiter.svg?style=flat)](http://travis-ci.org/TabDigital/redis-rate-limiter)
+[![Dependencies](http://img.shields.io/david/TabDigital/redis-rate-limiter.svg?style=flat)](https://david-dm.org/TabDigital/redis-rate-limiter)
+[![Dev dependencies](http://img.shields.io/david/dev/TabDigital/redis-rate-limiter.svg?style=flat)](https://david-dm.org/TabDigital/redis-rate-limiter)
+
 Rate-limit any operation, backed by Redis.
 
 - Inspired by [ratelimiter](https://www.npmjs.org/package/ratelimiter)
