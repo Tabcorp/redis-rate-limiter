@@ -30,6 +30,7 @@ describe('Rate-limiter', function() {
     async.parallel(reqs, function(err, rates) {
       _.pluck(rates, 'current').should.eql([1, 2, 3, 4, 5]);
       _.each(rates, function(r) {
+        r.key.should.eql('a');
         r.limit.should.eql(10);
         r.window.should.eql(1);
         r.over.should.eql(false);
