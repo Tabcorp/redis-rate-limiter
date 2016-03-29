@@ -6,6 +6,7 @@
 [![Build Status](http://img.shields.io/travis/TabDigital/redis-rate-limiter.svg?style=flat)](http://travis-ci.org/TabDigital/redis-rate-limiter)
 [![Dependencies](http://img.shields.io/david/TabDigital/redis-rate-limiter.svg?style=flat)](https://david-dm.org/TabDigital/redis-rate-limiter)
 [![Dev dependencies](http://img.shields.io/david/dev/TabDigital/redis-rate-limiter.svg?style=flat)](https://david-dm.org/TabDigital/redis-rate-limiter)
+[![Known Vulnerabilities](https://snyk.io/package/npm/redis-rate-limiter/badge.svg)](https://snyk.io/package/npm/redis-rate-limiter)
 
 Rate-limit any operation, backed by Redis.
 
