@@ -28,7 +28,7 @@ describe('Rate-limiter', function() {
     var limiter = createLimiter('10/second');
     var reqs = request(limiter, 5, {id: 'a'});
     async.parallel(reqs, function(err, rates) {
-      _.pluck(rates, 'current').should.eql([1, 2, 3, 4, 5]);
+      _.map(rates, 'current').should.eql([1, 2, 3, 4, 5]);
       _.each(rates, function(r) {
         r.key.should.eql('a');
         r.limit.should.eql(10);
