@@ -5,6 +5,7 @@
   "author": "Tabcorp Digital Team",
   "license": "MIT",
   "main": "lib/index.js",
+  "repository": "TabDigital/redis-rate-limiter",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
