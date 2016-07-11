@@ -11,16 +11,16 @@
     "test": "mocha"
   },
   "dependencies": {
-    "moment": "~2.12.0"
+    "moment": "~2.14.1"
   },
   "devDependencies": {
     "async": "~1.5.2",
-    "express": "~4.13.4",
-    "lodash": "~4.6.1",
-    "mocha": "~2.4.5",
+    "express": "~4.14.0",
+    "lodash": "~4.13.1",
+    "mocha": "~2.5.3",
     "redis": "~2.6.0-0",
     "require-lint": "^1.1.1",
-    "should": "~8.3.0",
+    "should": "~9.0.2",
     "supertest": "~1.2.0"
   }
 }
