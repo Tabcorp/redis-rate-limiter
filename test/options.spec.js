@@ -29,18 +29,6 @@ describe('Options', function() {
       }).should.eql('1.2.3.4');
     });
 
-    it('can be the client IP/32 mask', function() {
-      var opts = options.canonical({
-        redis: {},
-        key: 'ip/32',
-        limit: 10,
-        window: 60
-      });
-      opts.key({
-        connection: { remoteAddress: '1.2.3.4' }
-      }).should.eql('1.2.3.0/32');
-    });
-
     it('fails for invalid keys', function() {
       (function() {
         var opts = options.canonical({

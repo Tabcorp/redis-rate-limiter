@@ -10,7 +10,6 @@
     "test": "./node_modules/.bin/mocha"
   },
   "dependencies": {
-    "ip": "~1.1.2",
     "moment": "~2.12.0"
   },
   "devDependencies": {
