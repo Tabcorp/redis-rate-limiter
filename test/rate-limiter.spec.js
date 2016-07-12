@@ -2,6 +2,7 @@ var _            = require('lodash');
 var async        = require('async');
 var should       = require('should');
 var redis        = require('redis');
+var reset        = require('./reset');
 var rateLimiter  = require('../lib/rate-limiter');
 
 describe('Rate-limiter', function() {
@@ -17,11 +18,7 @@ describe('Rate-limiter', function() {
   });
 
   beforeEach(function(done) {
-    async.series([
-      client.del.bind(client, 'ratelimit:a'),
-      client.del.bind(client, 'ratelimit:b'),
-      client.del.bind(client, 'ratelimit:c')
-    ], done);
+    reset.allkeys(client, done);
   });
 
   it('calls back with the rate data', function(done) {

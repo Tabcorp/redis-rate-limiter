@@ -4,6 +4,7 @@ var should       = require('should');
 var redis        = require('redis');
 var express      = require('express');
 var supertest    = require('supertest');
+var reset        = require('./reset');
 var middleware   = require('../lib/middleware');
 
 describe('Middleware', function() {
@@ -19,6 +20,10 @@ describe('Middleware', function() {
     client.on('ready', done);
   });
 
+  beforeEach(function(done) {
+    reset.allkeys(client, done);
+  });
+
   describe('IP throttling', function() {
 
     before(function() {
@@ -27,17 +32,6 @@ describe('Middleware', function() {
         key: 'ip',
         rate: '10/second'
       });
-    });
-
-    beforeEach(function(done) {
-      // cleanup Redis keys
-      // TODO: cleanup is coupled to how the default "ip" shorthand works
-      var server = express();
-      server.get('/cleanup', function(req, res) {
-        client.del('ratelimit:' + req.connection.remoteAddress);
-        res.end();
-      });
-      supertest(server).get('/cleanup').end(done);
     });
 
     it('passes through under the limit', function(done) {
@@ -92,14 +86,6 @@ describe('Middleware', function() {
         key: function(req) { return req.query.user; },
         rate: '10/second'
       });
-    });
-
-    beforeEach(function(done) {
-      async.series([
-        client.del.bind(client, 'ratelimit:a'),
-        client.del.bind(client, 'ratelimit:b'),
-        client.del.bind(client, 'ratelimit:c')
-      ], done);
     });
 
     it('uses a different bucket for each custom key (user)', function(done) {
