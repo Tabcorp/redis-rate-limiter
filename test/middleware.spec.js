@@ -30,7 +30,14 @@ describe('Middleware', function() {
     });
 
     beforeEach(function(done) {
-      client.del('ratelimit:127.0.0.1', done);
+      // cleanup Redis keys
+      // TODO: cleanup is coupled to how the default "ip" shorthand works
+      var server = express();
+      server.get('/cleanup', function(req, res) {
+        client.del('ratelimit:' + req.connection.remoteAddress);
+        res.end();
+      });
+      supertest(server).get('/cleanup').end(done);
     });
 
     it('passes through under the limit', function(done) {
