@@ -70,20 +70,7 @@ var client = redis.createClient(6379, 'localhost', {
 ### `key`
 
 The key is how requests are grouped for rate-limiting.
-Typically, this would be a user ID, a type of operation...
-There are several helpers built-in:
-
-```js
-// identify users by IP
-key: 'ip'
-
-// identify users by their IP network (255.255.255.0 mask)
-key: 'ip/32'
-
-// identify users by the X-Forwarded-For header
-// careful: this is just an HTTP header and can easily be spoofed
-key: 'x-forwarded-for'
-```
+Typically, this would be a user ID, a type of operation.
 
 You can also specify any custom function:
 
@@ -96,6 +83,12 @@ key: function(x) { return x.user.id + ':' + x.operation; }
 
 // rate limit everyone in the same bucket
 key: function(x) { return 'single-bucket'; }
+```
+
+You can also use the built-in `ip` shorthand, which gets the remote address from an HTTP request.
+
+```js
+key: 'ip'
 ```
 
 ### `window`
@@ -183,5 +176,4 @@ server.get(
   rateLimiter.middleware({redis: client, key: ipAndRoute, rate: '20/minute'}),
   controllerB
 );
-
 ```
