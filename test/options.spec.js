@@ -8,7 +8,7 @@ describe('Options', function() {
     it('can specify a function', function() {
       var opts = options.canonical({
         redis: {},
-        key: function(req) { return req.id; },
+        key: function(req) {return req.id;},
         limit: 10,
         window: 60
       });
@@ -51,8 +51,19 @@ describe('Options', function() {
         limit: 10,   // 10 requests
         window: 60   // per 60 seconds
       });
-      opts.limit.should.eql(10);
-      opts.window.should.eql(60);
+      opts.limit().should.eql(10);
+      opts.window().should.eql(60);
+    });
+
+    it('should allow functions to get the limit', function() {
+      var opts = options.canonical({
+        redis: {},
+        key: 'ip',
+        limit: function(){return 10;},   // 10 requests
+        window: function(){return 60;}   // per 60 seconds
+      });
+      opts.limit().should.eql(10);
+      opts.window().should.eql(60);
     });
 
   });
@@ -65,8 +76,8 @@ describe('Options', function() {
         key: 'ip',
         rate: rate
       });
-      opts.limit.should.eql(limit, 'Wrong limit for rate ' + rate);
-      opts.window.should.eql(window, 'Wrong window for rate ' + rate);
+      opts.limit().should.eql(limit, 'Wrong limit for rate ' + rate);
+      opts.window().should.eql(window, 'Wrong window for rate ' + rate);
     }
 
     it('can use the full unit name (x/second)', function() {
@@ -74,6 +85,7 @@ describe('Options', function() {
       assertRate('100/minute', 100, 60);
       assertRate('1000/hour', 1000, 3600);
       assertRate('5000/day', 5000, 86400);
+      assertRate(function(){return '5000/day';}, 5000, 86400);
     });
 
     it('can use the short unit name (x/s)', function() {
@@ -81,6 +93,7 @@ describe('Options', function() {
       assertRate('100/m', 100, 60);
       assertRate('1000/h', 1000, 3600);
       assertRate('5000/d', 5000, 86400);
+      assertRate(function(){return '5000/d';}, 5000, 86400);
     });
 
     it('has to be a valid format', function() {
@@ -109,6 +122,16 @@ describe('Options', function() {
           redis: {},
           key: 'ip',
           rate: '50/century'
+        });
+      }).should.throw('Invalid rate window: 50/century');
+    });
+
+    it('has to be a valid unit when passing a function to get the rate', function() {
+      (function() {
+        var opts = options.canonical({
+          redis: {},
+          key: 'ip',
+          rate: function(){return '50/century';}
         });
       }).should.throw('Invalid rate window: 50/century');
     });
