@@ -11,7 +11,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "moment": "~2.16.0"
+    "moment": "~2.17.0"
   },
   "devDependencies": {
     "async": "~2.1.1",
