@@ -137,6 +137,19 @@ rate: '100/h'
 
 *Note:* the rate is parsed ahead of time, so this notation doesn't affect performance.
 
+### `incr`
+
+How much to increment the usage for a given call. This is useful in scenarios where incrementing by
+one is not the whole story.  For example, for rate limiting computation time.  Some operations take
+longer than other so counting operations doesn't work.  Rather, use `incr` to track and limit the
+actual compute time.
+
+You would typically specify a custom function:
+
+```js
+// rate-limit based on the cost of an operation
+key: function(x) { return x.cost; }
+
 ## HTTP middleware
 
 This package  contains a pre-built middleware,
