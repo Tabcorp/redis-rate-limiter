@@ -149,6 +149,7 @@ You would typically specify a custom function:
 ```js
 // rate-limit based on the cost of an operation
 key: function(x) { return x.cost; }
+```
 
 ## HTTP middleware
 
