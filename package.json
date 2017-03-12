@@ -21,6 +21,6 @@
     "redis": "~2.7.0",
     "require-lint": "^1.1.1",
     "should": "~11.2.1",
-    "supertest": "~2.0.0"
+    "supertest": "~3.0.0"
   }
 }
