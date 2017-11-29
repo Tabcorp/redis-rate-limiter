@@ -10,7 +10,7 @@ describe('Rate-limiter', function() {
   this.slow(5000);
   this.timeout(5000);
 
-  var client  = null;
+  var client = null;
 
   before(function(done) {
     client = redis.createClient(6379, 'localhost', {enable_offline_queue: false});
@@ -19,6 +19,10 @@ describe('Rate-limiter', function() {
 
   beforeEach(function(done) {
     reset.allkeys(client, done);
+  });
+
+  after(function() {
+    client.quit();
   });
 
   it('calls back with the rate data', function(done) {

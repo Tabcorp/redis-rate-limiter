@@ -24,6 +24,10 @@ describe('Middleware', function() {
     reset.allkeys(client, done);
   });
 
+  after(function() {
+    client.quit();
+  });
+
   describe('IP throttling', function() {
 
     before(function() {
