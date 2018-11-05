@@ -13,7 +13,7 @@ const rateLimiter  = require('../lib/rate-limiter');
     let client = null;
 
     before(function(done) {
-      client = redis.createClient(8002, 'localhost', {enable_offline_queue: false});
+      client = redis.createClient(6379, 'localhost', {enable_offline_queue: false});
       client.on('ready', done);
     });
 
